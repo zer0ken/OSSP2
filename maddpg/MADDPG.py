@@ -15,7 +15,7 @@ class MADDPG:
         chkpt_dir += scenario
         
         for agent_idx in range(self.n_agents):
-            self.agents.append(Agent(actor_dims, critic_dims, n_agents, n_actions,
+            self.agents.append(Agent(actor_dims[agent_idx], critic_dims, n_agents, n_actions,
                                     agent_idx, chkpt_dir, 
                                     alpha, beta, gamma, tau, fc1, fc2))
         
@@ -48,7 +48,7 @@ class MADDPG:
         
         states = T.tensor(states, dtype=T.float).to(device)
         actions = T.tensor(actions, dtype=T.float).to(device)
-        rewards = T.tensor(rewards).to(device)
+        rewards = T.tensor(rewards, dtype=T.float).to(device)
         new_states = T.tensor(new_states, dtype=T.float).to(device)
         dones = T.tensor(dones).to(device)
         

@@ -15,15 +15,17 @@ def observations_to_state_vector(observations):
 if __name__ == '__main__':
     scenario = 'simple'
     env = simple_adversary_v3.env(render_mode='human')
+    env.reset()
+    
     n_agents = env.num_agents
     actor_dims = []
     for i in range(n_agents):
-        actor_dims.append(env.observation_spaces[i].shape[0])
+        actor_dims.append(env.observation_space(env.agents[0]).shape[0])
     critic_dims = sum(actor_dims)
     
     # todo: check if the env has attribute 'n'
     # n_actions = env.action_spaces[0].shape[0]
-    n_actions = env.action_spaces[0].n
+    n_actions = env.action_space(env.agents[0]).n
     
     maddpg_agents = MADDPG(actor_dims, critic_dims, n_agents ,n_actions, scenario,
                             alpha=0.01, beta=0.01, fc1=64, fc2=64)
@@ -43,7 +45,6 @@ if __name__ == '__main__':
     if evaluate:
         maddpg_agents.load_checkpoint()
     
-    env.reset()
     env.render()
     
     for i in range(N_GAMES):
