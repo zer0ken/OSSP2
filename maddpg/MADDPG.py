@@ -15,7 +15,7 @@ class MADDPG:
         chkpt_dir += scenario
         
         for agent_idx in range(self.n_agents):
-            self.agents.append(Agent(actor_dims[agent_idx], critic_dims, n_agents, n_actions,
+            self.agents.append(Agent(actor_dims[agent_idx], critic_dims, n_agents, n_actions[agent_idx],
                                     agent_idx, chkpt_dir, 
                                     alpha, beta, gamma, tau, fc1, fc2))
         
@@ -34,7 +34,6 @@ class MADDPG:
         for agent_idx, agent in enumerate(self.agents):
             action = agent.choose_action(raw_obs[agent_idx])
             actions.append(action)
-        
         return actions
 
     def learn(self, memory):

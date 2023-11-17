@@ -15,7 +15,7 @@ class MultiAgentReplayBuffer:
         self.state_memory = np.zeros((self.mem_size, critic_dims))
         self.new_state_memory = np.zeros((self.mem_size, critic_dims))
         self.reward_memory = np.zeros((self.mem_size, n_agents))
-        self.terminal_memory = np.zeros((self.mem_size, n_agents), dtype=np.bool)
+        self.terminal_memory = np.zeros((self.mem_size, n_agents), dtype=bool)
         
         self.init_actor_memory()
         
@@ -30,7 +30,7 @@ class MultiAgentReplayBuffer:
             self.actor_new_state_memory.append(
                 np.zeros((self.mem_size, self.actor_dims[i])))
             self.actor_action_memory.append(
-                np.zeros((self.mem_size, self.n_actions)))
+                np.zeros((self.mem_size, self.n_actions[i])))
     
     def store_transition(self, raw_obs, state, action, reward, 
                         raw_new_obs, new_state, done):
